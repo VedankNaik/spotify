@@ -19,7 +19,7 @@ function Sidebar() {
       <div className="space-y-4">
         <button
           className="flex items-center space-x-2 hover:text-white"
-          onCLick={() => signOut()}
+          onClick={() => signOut()}
         >
           <HomeIcon className="h-5 w-5" />
           <p>Logout</p>
