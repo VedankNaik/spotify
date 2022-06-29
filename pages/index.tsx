@@ -1,6 +1,8 @@
 import type { NextPage } from 'next'
 import Sidebar from '../components/Sidebar'
 import Center from '../components/Center'
+import Player from '../components/Player'
+
 import { getSession } from 'next-auth/react'
 
 const Home: NextPage = () => {
@@ -9,9 +11,10 @@ const Home: NextPage = () => {
       <main className="flex">
         <Sidebar />
         <Center />
-        {/* center */}
       </main>
-      <div>{/* player */}</div>
+      <div className="sticky bottom-0">
+        <Player />
+      </div>
     </div>
   )
 }

@@ -1,10 +1,27 @@
 import React from 'react'
 import useSpotify from '../hooks/useSpotify'
+import { useRecoilState } from 'recoil'
+import { currentTrackIdState, isPlayingState } from '../atoms/songAtom'
+
 
 function Song({ order, track }) {
   const spotifyApi = useSpotify()
+  const [currentTrack, setCurrentTrack] = useRecoilState(currentTrackIdState)
+  const [isplaying, setIsplaying] = useRecoilState(isPlayingState)
+
+  const playSong = async () => {
+    setCurrentTrack(track.track.id)
+    setIsplaying(true)
+    spotifyApi.play({
+      uris: [track.track.uri],
+    })
+  }
+
   return (
-    <div className="grid grid-cols-2 text-gray-500 py-4 px-5 hover:bg-gray-900 rounded-lg cursor-pointer">
+    <div
+      className="grid cursor-pointer grid-cols-2 rounded-lg py-4 px-5 text-gray-500 hover:bg-gray-900"
+      onClick={playSong}
+    >
       <div className="flex items-center space-x-4 ">
         <p>{order + 1}</p>
         <img
@@ -13,12 +30,12 @@ function Song({ order, track }) {
           alt="Album"
         />
         <div>
-          <p className="w-39 lg:w-64 text-white truncate">{track.track.name}</p>
+          <p className="w-39 truncate text-white lg:w-64">{track.track.name}</p>
           <p>{track.track.artists[0].name}</p>
         </div>
       </div>
       <div className="ml-auto flex items-center justify-between md:ml-0">
-        <p className="w-40 hidden md:inline">{track.track.album.name}</p>
+        <p className="hidden w-40 md:inline">{track.track.album.name}</p>
         <p>{millisToMinutesAndSeconds(track.track.duration_ms)}</p>
       </div>
     </div>
